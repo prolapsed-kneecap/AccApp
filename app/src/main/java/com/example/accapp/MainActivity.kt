@@ -8,6 +8,7 @@ import android.hardware.SensorManager
 import android.os.CountDownTimer
 import android.os.Handler
 import android.util.Log
+import android.widget.TextView
 import android.widget.Toast
 import java.lang.Math.abs
 
@@ -17,6 +18,8 @@ class MainActivity : AppCompatActivity() {
     var flag = false
     val interval: Long = 1000
     var isUp = false
+
+    lateinit var textView : TextView
 
     val processSensors: Runnable = object : Runnable {
         override fun run() {
@@ -41,6 +44,8 @@ class MainActivity : AppCompatActivity() {
         val valuesLinAccel = FloatArray(3)
         val valuesGravity = FloatArray(3)
 
+        textView = findViewById(R.id.textView)
+
         sensorManager.registerListener(object : SensorEventListener {
             override fun onSensorChanged(event: SensorEvent?) {
 
@@ -62,6 +67,7 @@ class MainActivity : AppCompatActivity() {
                             isUp = true
                             Data.score++
                             Data.prevY = valuesAccel[1]
+                            textView.text = Data.score.toString()
                         }
                     } else {
                         isUp = false
